@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% load static from staticfiles %}
+
+{% block title %}Expense List{% endblock %}
+
+{% block content %}
+{% if expenses %}
+<div class='row margin-bottom margin-top'>
+        <table class="stack_small">
+                <thead>
+                        <tr>
+                                <th class='text-center'>Date</th>
+                                <th class='text-center'>Third Party</th>
+                                <th class='text-center'>Amount</th>
+								<th class='text-center'>Payment Mode</th>
+								<th class='text-center'>Notes</th>
+                        </tr>
+                </thead>
+                <tbody>
+                        {% for expense in expenses %}
+                                <tr>
+                                        <td class='text-center'>{{ expense.date_expense }}</td>
+										<td class='text-center'>{{ expense.third_party }}</td>
+										<td class='text-center'>{{ expense.amount }}</td>
+										<td class='text-center'>{{ expense.payment_mode }}</td>
+										<td class='text-center'>{{ expense.notes }}</td>
+                                </tr>
+                        {% endfor %}
+                </tbody>
+        </table>
+</div>
+{% else %}
+        <h1 class=" text-center subheader">Vous n'avez pas encore de dépenses ! Allez au boulot ! ;)</h1>
+{% endif %}
+{% endblock %}
+
+{% block javascript %}
+
+{% endblock %}

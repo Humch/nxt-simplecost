@@ -1,7 +1,7 @@
 from django.conf.urls import url
 
-from .views import BasicView
+from .views import ExpenseListView
 
 urlpatterns = [
-    url(r'^$', BasicView.as_view(), name = 'basic_view' ),
+    url(r'^simplecost/$', ExpenseListView.as_view(), name = 'expense_list_view' ),
 ]
