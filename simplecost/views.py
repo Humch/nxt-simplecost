@@ -55,6 +55,7 @@ class ExpenseListView(ListView):
     
     model = Expense
     context_object_name = 'expenses'
+    queryset = Expense.objects.all().order_by('-date_expense')
     
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
@@ -88,7 +89,7 @@ def print_it(request):
     # Create the PDF object, using the response object as its "file."
     p = SimpleDocTemplate(response, pagesize=letter)
         
-    expenses = Expense.objects.all()
+    expenses = Expense.objects.all().order_by('date_expense')
     
     # container for the 'Flowable' objects
     elements = []
