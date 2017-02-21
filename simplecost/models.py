@@ -30,5 +30,5 @@ class Expense(models.Model):
         return str(self.date_expense) + '_' + str(self.third_party) + '_' + str(self.amount)
     
     def get_absolute_url(self):
-        return reverse('expense_list_view')
+        return reverse('expense-list')
  
