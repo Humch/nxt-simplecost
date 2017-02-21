@@ -5,26 +5,39 @@
 {% block title %}Expense List{% endblock %}
 
 {% block content %}
+
+	<div class='row margin-bottom margin-top'>
+		<div class='small-6 columns'>
+
+		</div>
+		{% if expenses %}	
+		<div class='small-4 columns'>
+			<p class="text-center show-for-medium"><a class='button' href="{% url 'print_it' %}"><i class="fi-page-pdf"></i> Export pdf</a></p>
+			<p class="text-center hide-for-medium"><a class='button' href="{% url 'print_it' %}"><i class="fi-page-pdf"></i></a></p>
+		</div>
+		{% endif %}
+	</div>
+
 {% if expenses %}
 <div class='row margin-bottom margin-top'>
-        <table class="stack_small">
+        <table>
                 <thead>
                         <tr>
                                 <th class='text-center'>Date</th>
                                 <th class='text-center'>Third Party</th>
                                 <th class='text-center'>Amount</th>
-								<th class='text-center'>Payment Mode</th>
-								<th class='text-center'>Notes</th>
+				<th class='text-center'>Payment Mode</th>
+				<th class='text-center'>Notes</th>
                         </tr>
                 </thead>
                 <tbody>
                         {% for expense in expenses %}
                                 <tr>
                                         <td class='text-center'>{{ expense.date_expense }}</td>
-										<td class='text-center'>{{ expense.third_party }}</td>
-										<td class='text-center'>{{ expense.amount }}</td>
-										<td class='text-center'>{{ expense.payment_mode }}</td>
-										<td class='text-center'>{{ expense.notes }}</td>
+					<td class='text-center'>{{ expense.third_party }}</td>
+					<td class='text-center'>{{ expense.amount }}</td>
+					<td class='text-center'>{{ expense.payment_mode }}</td>
+					<td class='text-center'>{{ expense.notes }}</td>
                                 </tr>
                         {% endfor %}
                 </tbody>
@@ -33,6 +46,10 @@
 {% else %}
         <h1 class=" text-center subheader">Vous n'avez pas encore de dépenses ! Allez au boulot ! ;)</h1>
 {% endif %}
+
+	<div class="reveal" id="addExpenseForm" data-reveal data-multiple-opened="true">
+	</div>
+
 {% endblock %}
 
 {% block javascript %}

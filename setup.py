@@ -19,6 +19,7 @@ setup(
     author='Fabien Schlegel',
     author_email='fabienschlegel@yahoo.fr',
     install_requires=[
+        'reportlab',
         'django-auxiliare'
     ],
     classifiers=[
