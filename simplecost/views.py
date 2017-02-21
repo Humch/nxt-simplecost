@@ -9,10 +9,6 @@ from django.core.urlresolvers import reverse_lazy
 
 import json
 
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
-from django.views.generic import ListView
-
 from .models import ThirdParty, PaymentMode, Expense
 
 from .forms import ExpenseForm
@@ -80,7 +76,8 @@ class ExpenseCreate(AjaxableResponseMixin, CreateView):
     
 def print_it(request):
     """
-    Create de pdf file with the list of all expenses
+    Create a pdf file with the list of all expenses
+    ordered by oldest expenses
     """
     # Create the HttpResponse object with the appropriate PDF headers.
     response = HttpResponse(content_type='application/pdf')
@@ -102,13 +99,16 @@ def print_it(request):
     for i, expense in enumerate(expenses):
         # Add a row to the table
         table_data.append([expense.date_expense, expense.third_party, str(expense.amount) + ' €',expense.payment_mode,expense.notes])
+    
     # Create the table
     expense_table = Table(table_data)
     
+    # Add grid an font for table 
     expense_table.setStyle(TableStyle([('ALIGN',(0,0),(-1,-1),'CENTER'),
                                         ('VALIGN',(0,0),(-1,-1),'MIDDLE'),
                                         ('INNERGRID', (0,0), (-1,-1), 0.25, colors.black),
                                         ('BOX', (0,0), (-1,-1), 0.25, colors.black),
+                                        ('FONTNAME',(0,0),(-1,-1),'Courier'),
                                         ]))
     
     elements.append(expense_table)
