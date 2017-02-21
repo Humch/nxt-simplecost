@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 
 class ThirdParty(models.Model):
     
@@ -29,5 +30,5 @@ class Expense(models.Model):
         return str(self.date_expense) + '_' + str(self.third_party) + '_' + str(self.amount)
     
     def get_absolute_url(self):
-        return reverse('expense-detail', kwargs={'pk': self.pk})
+        return reverse('expense_list_view')
  

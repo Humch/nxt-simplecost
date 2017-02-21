@@ -8,7 +8,8 @@
 
 	<div class='row margin-bottom margin-top'>
 		<div class='small-6 columns'>
-
+			<p class="text-center show-for-medium"><button class='button' onClick="addExpense()">Add an expense <i class="fi-plus"></i></button></p>
+			<p class="text-center hide-for-medium"><button class='button' onClick="addExpense()"><i class="fi-plus"></i></button></p>
 		</div>
 		{% if expenses %}	
 		<div class='small-4 columns'>
@@ -53,5 +54,12 @@
 {% endblock %}
 
 {% block javascript %}
-
+	<script type="text/javascript">
+		function addExpense() {
+			$.ajax('{% url 'expense-create' %}')
+			.done(function(resp){
+				$("#addExpenseForm").html(resp).foundation('open');
+			});
+		}
+	</script>
 {% endblock %}
