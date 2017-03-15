@@ -1,19 +1,19 @@
 {% extends "base.html" %}
-
+{% load i18n %}
 {% load static from staticfiles %}
 
-{% block title %}Expense List{% endblock %}
+{% block title %}{% trans "Expense List" %}{% endblock %}
 
 {% block content %}
 
 	<div class='row margin-bottom margin-top'>
 		<div class='small-6 columns'>
-			<p class="text-center show-for-medium"><button class='button' onClick="addExpense()">Add an expense <i class="fi-plus"></i></button></p>
+			<p class="text-center show-for-medium"><button class='button' onClick="addExpense()">{% trans "Add an expense" %} <i class="fi-plus"></i></button></p>
 			<p class="text-center hide-for-medium"><button class='button' onClick="addExpense()"><i class="fi-plus"></i></button></p>
 		</div>
 		{% if expenses %}	
 		<div class='small-4 columns'>
-			<p class="text-center show-for-medium"><a class='button' href="{% url 'print-expense-list' %}"><i class="fi-page-pdf"></i> Export pdf</a></p>
+			<p class="text-center show-for-medium"><a class='button' href="{% url 'print-expense-list' %}"><i class="fi-page-pdf"></i> {% trans "Export to pdf" %}</a></p>
 			<p class="text-center hide-for-medium"><a class='button' href="{% url 'print-expense-list' %}"><i class="fi-page-pdf"></i></a></p>
 		</div>
 		{% endif %}
@@ -24,11 +24,11 @@
         <table>
                 <thead>
                         <tr>
-                                <th class='text-center'>Date</th>
-                                <th class='text-center'>Third Party</th>
-                                <th class='text-center'>Amount</th>
-				<th class='text-center'>Payment Mode</th>
-				<th class='text-center'>Notes</th>
+                                <th class='text-center'>{% trans "Date" %}</th>
+                                <th class='text-center'>{% trans "Third Party" %}</th>
+                                <th class='text-center'>{% trans "Amount" %}</th>
+				<th class='text-center'>{% trans "Payment Mode" %}</th>
+				<th class='text-center'>{% trans "Notes" %}</th>
                         </tr>
                 </thead>
                 <tbody>
@@ -45,7 +45,7 @@
         </table>
 </div>
 {% else %}
-        <h1 class=" text-center subheader">Vous n'avez pas encore de dépenses ! Allez au boulot ! ;)</h1>
+        <h1 class=" text-center subheader">{% trans "You don't have any expenses ! Go out ! ;)" %}</h1>
 {% endif %}
 
 	<div class="reveal" id="addExpenseForm" data-reveal data-multiple-opened="true">

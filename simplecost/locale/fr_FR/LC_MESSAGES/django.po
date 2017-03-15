@@ -1,0 +1,70 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-15 14:42+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: forms.py:13
+msgid "Expense Date"
+msgstr "Date de dépense"
+
+#: forms.py:18 templates/simplecost/expense_list.html:28
+msgid "Third Party"
+msgstr "Tiers"
+
+#: forms.py:23 templates/simplecost/expense_list.html:29
+msgid "Amount"
+msgstr "Montant"
+
+#: forms.py:27 templates/simplecost/expense_list.html:31
+msgid "Notes"
+msgstr "Notes"
+
+#: forms.py:33 templates/simplecost/expense_list.html:30
+msgid "Payment Mode"
+msgstr "Mode de paiement"
+
+#: templates/simplecost/expense_create_form.html:4
+msgid "Expense is created"
+msgstr "La dépense est créée"
+
+#: templates/simplecost/expense_create_form.html:7
+msgid "Expense isn't created"
+msgstr "la dépense n'est pas créée"
+
+#: templates/simplecost/expense_create_form.html:13
+msgid "Submit"
+msgstr "Valider"
+
+#: templates/simplecost/expense_list.html:5
+msgid "Expense List"
+msgstr "Liste des dépenses"
+
+#: templates/simplecost/expense_list.html:11
+msgid "Add an expense"
+msgstr "Ajouter une dépense"
+
+#: templates/simplecost/expense_list.html:16
+msgid "Export to pdf"
+msgstr "Exporter en PDF"
+
+#: templates/simplecost/expense_list.html:27
+msgid "Date"
+msgstr "Date"
+
+#: templates/simplecost/expense_list.html:48
+msgid "You don't have any expenses ! Go out ! ;)"
+msgstr "Vous n'avez rien dépenser ! Au boulot ! ;)"

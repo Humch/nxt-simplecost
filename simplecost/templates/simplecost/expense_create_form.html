@@ -1,15 +1,16 @@
+{% load i18n %}
 <div class="row">
 	<div class="success callout display_for_success" data-closable id="response_expense">
-		<p class="text-center">Expense is created</p>
+		<p class="text-center">{% trans "Expense is created" %}</p>
 	</div>
 	<div class="alert callout display_for_success" data-closable id="error_create_expense">
-		<p class="text-center"><i class="fi-alert red-color"></i> Expense isn't created <i class="fi-alert red-color"></i></p>
+		<p class="text-center"><i class="fi-alert red-color"></i> {% trans "Expense isn't created" %} <i class="fi-alert red-color"></i></p>
 	</div>
 	<form action="" method="post" id="addExpenseSend" enctype="multipart/form-data">
 		{% csrf_token %}
 		{{ form.as_p }}
 		<p class="text-center">
-			<input type="submit" class="button" value="Valider">
+			<input type="submit" class="button" value="{% trans "Submit" %}">
 		</p>
 	</form>
 </div>
