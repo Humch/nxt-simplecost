@@ -67,4 +67,4 @@ msgstr "Date"
 
 #: templates/simplecost/expense_list.html:48
 msgid "You don't have any expenses ! Go out ! ;)"
-msgstr "Vous n'avez rien dépenser ! Au boulot ! ;)"
+msgstr "Vous n'avez rien dépensé ! Au boulot ! ;)"
