@@ -46,12 +46,17 @@ class AjaxableResponseMixin(object):
 
 class ExpenseListView(ListView):
     """
-    Display a list of expenses
+    Display a list of expenses for the request user
     """
     
     model = Expense
     context_object_name = 'expenses'
-    queryset = Expense.objects.all().order_by('-date_expense')
+    
+    def get_queryset(self):
+        
+        queryset = Expense.objects.all().filter(property_of=self.request.user).order_by('-date_expense')
+        
+        return queryset
     
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
