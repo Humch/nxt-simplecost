@@ -5,6 +5,8 @@ Version 0.0.2
 --------------
 
 - add french translation
+- update forms for Django 1.11
+- update export pdf
 
 Version 0.0.1
 --------------
