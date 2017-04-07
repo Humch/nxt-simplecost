@@ -10,28 +10,31 @@ class ExpenseForm(ModelForm):
     Model form to create and update Expense Model object
     """
     date_expense = DateField(
-                        label = _('Expense Date')
+                        label = _('Expense Date'),
+                        required = True
                     )
     
     third_party = ModelChoiceField(
                     queryset = ThirdParty.objects.all(),
                     label = _("Third Party"),
-                    widget = Select(attrs={'required':True})
+                    required = True
                 )
     
     amount = DecimalField(
-                label = _("Amount")
+                label = _("Amount"),
+                required = True
             )
     
     notes = CharField(
                 label = _("Notes"),
-                widget=forms.Textarea
+                widget=forms.Textarea,
+                required = False
     )
     
     payment_mode = ModelChoiceField(
                         queryset = PaymentMode.objects.all(),
                         label = _("Payment Mode"),
-                        widget = Select(attrs={'required':True})
+                        required = True
                     )
     
     class Meta:
