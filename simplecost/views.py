@@ -54,7 +54,7 @@ class ExpenseListView(ListView):
     
     def get_queryset(self):
         
-        queryset = Expense.objects.all().filter(property_of=self.request.user).order_by('-date_expense')
+        queryset = Expense.objects.filter(property_of=self.request.user).order_by('-date_expense')
         
         return queryset
     
@@ -86,12 +86,12 @@ def print_it(request):
     """
     # Create the HttpResponse object with the appropriate PDF headers.
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="expenses.pdf"'
+    response['Content-Disposition'] = 'filename="expenses.pdf"'
 
     # Create the PDF object, using the response object as its "file."
     p = SimpleDocTemplate(response, pagesize=letter)
         
-    expenses = Expense.objects.all().order_by('date_expense')
+    expenses = Expense.objects.filter(property_of=request.user).order_by('date_expense')
     
     # container for the 'Flowable' objects
     elements = []

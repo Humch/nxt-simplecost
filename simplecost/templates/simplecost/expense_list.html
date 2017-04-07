@@ -13,8 +13,8 @@
 		</div>
 		{% if expenses %}	
 		<div class='small-4 columns'>
-			<p class="text-center show-for-medium"><a class='button' href="{% url 'print-expense-list' %}"><i class="fi-page-pdf"></i> {% trans "Export to pdf" %}</a></p>
-			<p class="text-center hide-for-medium"><a class='button' href="{% url 'print-expense-list' %}"><i class="fi-page-pdf"></i></a></p>
+			<p class="text-center show-for-medium"><a class='button' href="{% url 'print-expense-list' %}" target="_blank"><i class="fi-page-pdf"></i> {% trans "Export to pdf" %}</a></p>
+			<p class="text-center hide-for-medium"><a class='button' href="{% url 'print-expense-list' %}" target="_blank"><i class="fi-page-pdf"></i></a></p>
 		</div>
 		{% endif %}
 	</div>
