@@ -24,7 +24,7 @@
     <table>
         <thead>
 			<tr>
-                <th class='text-center'></th>
+                <th></th>
 				<th class='text-center'>{% trans "Date" %}</th>
                 <th class='text-center'>{% trans "Third Party" %}</th>
                 <th class='text-center'>{% trans "Amount" %}</th>
@@ -35,8 +35,8 @@
         <tbody>
             {% for expense in expenses %}
 				<tr>
-                    <td class='text-center'>
-						<div class="tiny stacked-for-small button-group">
+                    <td>
+						<div class="div-align tiny stacked-for-small button-group">
 							<button class="warning button" onClick="updateExpense('{% url 'expense-update' expense.id %}')"><i class="fi-pencil"></i></button>
 							<button class="alert button" onClick="deleteExpense('{% url 'expense-delete' expense.id %}')"><i class="fi-x"></i></a>
 						</div>
