@@ -78,6 +78,32 @@ class ExpenseCreate(AjaxableResponseMixin, CreateView):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(ExpenseCreate, self).dispatch(*args, **kwargs)
+
+class ExpenseUpdate(AjaxableResponseMixin, UpdateView):
+    """
+    View to update an Expense. Works with ajax.
+    Use default template expense_form.html
+    """
+    
+    model = Expense
+    form_class = ExpenseForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ExpenseUpdate, self).dispatch(*args, **kwargs)
+    
+class ExpenseDelete(AjaxableResponseMixin, DeleteView):
+    """
+    View to delete an Expense. Works with ajax.
+    Use default template expense_confirm_delete.html
+    """
+    
+    model = Expense
+    success_url = reverse_lazy('expense-list')
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ExpenseDelete, self).dispatch(*args, **kwargs)
     
 def print_it(request):
     """
