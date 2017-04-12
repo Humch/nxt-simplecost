@@ -1,6 +1,5 @@
 from django.conf.urls import url, include
 from auxiliare import urls
-
 from .views import ExpenseListView, ExpenseCreate, ExpenseUpdate, ExpenseDelete, print_it
 
 urlpatterns = [

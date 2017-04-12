@@ -9,6 +9,9 @@ from django.core.urlresolvers import reverse_lazy
 
 import json
 
+from datetime import date
+from calendar import monthrange
+
 from .models import ThirdParty, PaymentMode, Expense
 
 from .forms import ExpenseForm
@@ -18,6 +21,19 @@ from django.http import HttpResponse
 from reportlab.lib import colors
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
 from reportlab.lib.pagesizes import letter
+
+def quarter_range():
+    """
+    return the start date and the end date for the actual quarter of the year
+    """
+    quarter = [[1,3],[4,6],[7,9],[10,12]]
+    
+    start_date = date(date.today().year,quarter[date.today().month//3][0],1)
+    
+    end_date = date(date.today().year, quarter[date.today().month//3][1], monthrange(date.today().year,quarter[date.today().month//3][1])[1])
+
+    return start_date, end_date
+
 
 class AjaxableResponseMixin(object):
     """
@@ -47,16 +63,107 @@ class AjaxableResponseMixin(object):
 class ExpenseListView(ListView):
     """
     Display a list of expenses for the request user
+    The default queryset is all the values
+    The user can filter values, his choice is store in a session's variable
     """
     
     model = Expense
     context_object_name = 'expenses'
     
-    def get_queryset(self):
+    def get_queryset(self, *args, **kwargs):
         
-        queryset = Expense.objects.filter(property_of=self.request.user).order_by('-date_expense')
+        if not 'filterexpense' in self.request.session:
+            self.request.session['filterexpense'] = 'All'
+            self.request.session['filterexpensemonth'] = date.today().month
+            self.request.session['filterexpenseyear'] = date.today().year
+        
+        if not self.request.GET.get("filter"):
+            
+            filter_expense = self.request.session['filterexpense']
+        
+        else:
+            
+            filter_expense = self.request.GET.get("filter")
+        
+        if filter_expense == "All":
+                
+            queryset = Expense.objects.filter(property_of=self.request.user).order_by('-date_expense')
+            self.request.session['filterexpense'] = 'All'
+            self.request.session['filterexpensemonth'] = date.today().month
+            self.request.session['filterexpenseyear'] = date.today().year
+            
+        elif filter_expense == "This month":
+            
+            queryset = Expense.objects.filter(property_of=self.request.user,date_expense__year=date.today().year,date_expense__month=date.today().month).order_by('-date_expense')
+            self.request.session['filterexpense'] = 'This month'
+            self.request.session['filterexpensemonth'] = date.today().month
+            self.request.session['filterexpenseyear'] = date.today().year
+            
+        elif filter_expense == "This quarter":
+            
+            queryset = Expense.objects.filter(property_of=self.request.user,date_expense__range=quarter_range()).order_by('-date_expense')
+            self.request.session['filterexpense'] = 'This quarter'
+            self.request.session['filterexpensemonth'] = date.today().month
+            self.request.session['filterexpenseyear'] = date.today().year
+        
+        elif filter_expense == "Previous month":
+            
+            if not self.request.is_ajax():
+                
+                request_year = self.request.session['filterexpenseyear']
+                request_month = self.request.session['filterexpensemonth']
+            
+            elif self.request.session['filterexpensemonth'] == 1:
+                
+                request_month = 12
+                request_year = self.request.session['filterexpenseyear'] - 1
+            
+            else:
+            
+                request_year = self.request.session['filterexpenseyear']
+                request_month = self.request.session['filterexpensemonth'] - 1
+            
+            queryset = Expense.objects.filter(property_of=self.request.user,date_expense__year=request_year,date_expense__month=request_month).order_by('-date_expense')
+            self.request.session['filterexpense'] = 'Previous month'
+            self.request.session['filterexpenseyear'] = request_year
+            self.request.session['filterexpensemonth'] = request_month
+            
+        
+        elif filter_expense == "Next month":
+            
+            if not self.request.is_ajax():
+                
+                request_year = self.request.session['filterexpenseyear']
+                request_month = self.request.session['filterexpensemonth']
+            
+            elif self.request.session['filterexpensemonth'] == 12:
+                
+                request_month = 1
+                request_year = self.request.session['filterexpenseyear'] + 1
+            
+            else:
+            
+                request_year = self.request.session['filterexpenseyear']
+                request_month = self.request.session['filterexpensemonth'] + 1
+            
+            queryset = Expense.objects.filter(property_of=self.request.user,date_expense__year=request_year,date_expense__month=request_month).order_by('-date_expense')
+            self.request.session['filterexpense'] = 'Next month'
+            self.request.session['filterexpenseyear'] = request_year
+            self.request.session['filterexpensemonth'] = request_month
         
         return queryset
+    
+    def get_template_names(self, *args, **kwargs):
+        
+        if self.request.method == 'GET' and self.request.is_ajax():
+            
+            template_name = 'simplecost/expense_list_table.html'
+
+        else:
+            
+            template_name = 'simplecost/expense_list.html'
+            
+        return template_name
     
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):

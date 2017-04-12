@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-10 13:21+0200\n"
+"POT-Creation-Date: 2017-04-12 14:31+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,19 +21,23 @@ msgstr ""
 msgid "Expense Date"
 msgstr "Date de dépense"
 
-#: forms.py:19 templates/simplecost/expense_list.html:29
+#: forms.py:19 templates/simplecost/expense_list.html:47
+#: templates/simplecost/expense_list_table.html:10
 msgid "Third Party"
 msgstr "Tiers"
 
-#: forms.py:24 templates/simplecost/expense_list.html:30
+#: forms.py:24 templates/simplecost/expense_list.html:48
+#: templates/simplecost/expense_list_table.html:11
 msgid "Amount"
 msgstr "Montant"
 
-#: forms.py:29 templates/simplecost/expense_list.html:32
+#: forms.py:29 templates/simplecost/expense_list.html:50
+#: templates/simplecost/expense_list_table.html:13
 msgid "Notes"
 msgstr "Notes"
 
-#: forms.py:36 templates/simplecost/expense_list.html:31
+#: forms.py:36 templates/simplecost/expense_list.html:49
+#: templates/simplecost/expense_list_table.html:12
 msgid "Payment Mode"
 msgstr "Mode de paiement"
 
@@ -78,14 +82,28 @@ msgstr "Liste des dépenses"
 msgid "Add an expense"
 msgstr "Ajouter une dépense"
 
-#: templates/simplecost/expense_list.html:16
+#: templates/simplecost/expense_list.html:26
+msgid "All"
+msgstr "Tout"
+
+#: templates/simplecost/expense_list.html:27
+msgid "This month"
+msgstr "Ce mois-ci"
+
+#: templates/simplecost/expense_list.html:28
+msgid "This quarter"
+msgstr "Ce trimestre"
+
+#: templates/simplecost/expense_list.html:35
 msgid "Export to pdf"
 msgstr "Exporter en PDF"
 
-#: templates/simplecost/expense_list.html:28
+#: templates/simplecost/expense_list.html:46
+#: templates/simplecost/expense_list_table.html:9
 msgid "Date"
 msgstr "Date"
 
-#: templates/simplecost/expense_list.html:55
+#: templates/simplecost/expense_list.html:73
+#: templates/simplecost/expense_list_table.html:36
 msgid "You don't have any expenses ! Go out ! ;)"
 msgstr "Vous n'avez rien dépensé ! Au boulot ! ;)"

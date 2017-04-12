@@ -1,0 +1,37 @@
+{% load i18n %}
+{% load static from staticfiles %}
+{% if expenses %}
+<div class='row margin-bottom margin-top'>
+    <table>
+        <thead>
+			<tr>
+                <th></th>
+				<th class='text-center'>{% trans "Date" %}</th>
+                <th class='text-center'>{% trans "Third Party" %}</th>
+                <th class='text-center'>{% trans "Amount" %}</th>
+				<th class='text-center'>{% trans "Payment Mode" %}</th>
+				<th class='text-center'>{% trans "Notes" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for expense in expenses %}
+				<tr>
+                    <td>
+						<div class="div-align tiny stacked-for-small button-group">
+							<button class="warning button" onClick="updateExpense('{% url 'expense-update' expense.id %}')"><i class="fi-pencil"></i></button>
+							<button class="alert button" onClick="deleteExpense('{% url 'expense-delete' expense.id %}')"><i class="fi-x"></i></a>
+						</div>
+					</td>
+					<td class='text-center'>{{ expense.date_expense }}</td>
+					<td class='text-center'>{{ expense.third_party }}</td>
+					<td class='text-center'>{{ expense.amount }}</td>
+					<td class='text-center'>{{ expense.payment_mode }}</td>
+					<td class='text-center'>{{ expense.notes }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+    <h1 class=" text-center subheader">{% trans "You don't have any expenses ! Go out ! ;)" %}</h1>
+{% endif %}

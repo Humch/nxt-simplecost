@@ -6,19 +6,37 @@
 
 {% block content %}
 
-	<div class='row margin-bottom margin-top'>
-		<div class='small-6 columns'>
+	<div class='row align-center margin-bottom margin-top'>
+		<div class='small-2 medium-4 columns'>
 			<p class="text-center show-for-medium"><button class='button' onClick="addExpense()">{% trans "Add an expense" %} <i class="fi-plus"></i></button></p>
 			<p class="text-center hide-for-medium"><button class='button' onClick="addExpense()"><i class="fi-plus"></i></button></p>
 		</div>
-		{% if expenses %}	
-		<div class='small-4 columns'>
+		<div class='small-6 medium-4 columns'>
+			<ul class="dropdown menu" data-dropdown-menu>
+				<li><a href="#" onClick="filterExpenseCustom('Previous month')"><i class="fi-previous"></i></a></li>
+				<li>
+					<a href="#" id="sessionFilterExpense">
+						{% if request.session.filterexpense == 'Previous month' or request.session.filterexpense == 'Next month' %}
+							{{ request.session.filterexpensemonth }}/{{ request.session.filterexpenseyear }}
+						{% else %}
+							{% trans request.session.filterexpense %}
+						{% endif %}
+					</a>
+					<ul class="menu">
+						<li><a href="#" onClick="filterExpense('All','{% trans "All" %}')">{% trans "All" %}</a></li>
+						<li><a href="#" onClick="filterExpense('This month','{% trans "This month" %}')">{% trans "This month" %}</a></li>
+						<li><a href="#" onClick="filterExpense('This quarter','{% trans "This quarter" %}')">{% trans "This quarter" %}</a></li>
+					</ul>
+				</li>
+				<li><a href="#" onClick="filterExpenseCustom('Next month')"><i class="fi-next"></i></a></li>
+			</ul>
+		</div>
+		<div class='small-2 medium-4 columns'>
 			<p class="text-center show-for-medium"><a class='button' href="{% url 'print-expense-list' %}" target="_blank"><i class="fi-page-pdf"></i> {% trans "Export to pdf" %}</a></p>
 			<p class="text-center hide-for-medium"><a class='button' href="{% url 'print-expense-list' %}" target="_blank"><i class="fi-page-pdf"></i></a></p>
 		</div>
-		{% endif %}
 	</div>
-
+<span id="expense_list_table">
 {% if expenses %}
 <div class='row margin-bottom margin-top'>
     <table>
@@ -54,6 +72,7 @@
 {% else %}
     <h1 class=" text-center subheader">{% trans "You don't have any expenses ! Go out ! ;)" %}</h1>
 {% endif %}
+</span>
 
 	<div class="reveal" id="addExpenseForm" data-reveal data-multiple-opened="true">
 	</div>
@@ -87,6 +106,75 @@
 			.done(function(resp){
 				$("#deleteExpense").html(resp).foundation('open');
 			});
+		}
+	</script>
+	<script type="text/javascript">
+		$(function(){
+			$('#filterExpense').fdatepicker({
+				format: 'dd/mm/yyyy',
+				disableDblClickSelection: true,
+				language: navigator.language
+			});
+		});
+	</script>
+
+	<script type="text/javascript">
+		{% if request.session.filterexpense == 'Previous month' or request.session.filterexpense == 'Next month' %}
+			var filterExpenseMonth = {{ request.session.filterexpensemonth }};
+			var filterExpenseYear = {{ request.session.filterexpenseyear }};
+		{% else %}
+			var filterExpenseMonth = parseInt('{% now "m" %}');
+			var filterExpenseYear = parseInt('{% now "Y" %}');
+		{% endif %}
+
+		function filterExpenseCustom(filter){
+			$.ajax({
+				url:'{% url 'expense-list' %}',
+				data: {filter: filter},
+				dataType: "html",
+				type: 'GET',
+				success: function(data){
+					$("#expense_list_table").empty().hide();
+					$("#expense_list_table").append(data);
+					$('#expense_list_table').fadeIn(1000);
+					$("#sessionFilterExpense").empty();
+					if (filter == 'Previous month'){
+						if (filterExpenseMonth == 1) {
+							filterExpenseMonth = 12;
+							filterExpenseYear = --filterExpenseYear;
+						} else {
+							filterExpenseMonth = --filterExpenseMonth;
+						};
+					} else {
+						if (filterExpenseMonth == 12) {
+							filterExpenseMonth = 1;
+							filterExpenseYear = ++filterExpenseYear;
+						} else {
+							filterExpenseMonth = ++filterExpenseMonth;
+						};
+					};
+					$("#sessionFilterExpense").text(filterExpenseMonth + "/" + filterExpenseYear);
+					}
+				});
+		}
+	</script>
+	<script type="text/javascript">
+		function filterExpense(filter,filterExpenseValue){
+			$.ajax({
+				url:'{% url 'expense-list' %}',
+				data: {filter: filter},
+				dataType: "html",
+				type: 'GET',
+				success: function(data){
+					$("#expense_list_table").empty().hide();
+					$("#expense_list_table").append(data);
+					$('#expense_list_table').fadeIn(1000);
+					$("#sessionFilterExpense").empty();
+					$("#sessionFilterExpense").text(filterExpenseValue);
+					filterExpenseMonth = parseInt('{% now "m" %}');
+					filterExpenseYear = parseInt('{% now "Y" %}');
+					}
+				});
 		}
 	</script>
 {% endblock %}
