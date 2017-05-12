@@ -8,6 +8,9 @@ class ThirdParty(models.Model):
     
     def __str__(self):
         return self.name
+    
+    def get_absolute_url(self):
+        return reverse('expense-list')
 
 class PaymentMode(models.Model):
     
