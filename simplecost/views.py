@@ -14,7 +14,7 @@ from calendar import monthrange
 
 from .models import ThirdParty, PaymentMode, Expense
 
-from .forms import ExpenseForm, ThirdPartyForm
+from .forms import ExpenseForm, ThirdPartyForm, PaymentModeForm
 
 from django.http import HttpResponse
 
@@ -95,6 +95,16 @@ class ThirdPartyCreate(WithNameAjaxableResponseMixin,CreateView):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(ThirdPartyCreate, self).dispatch(*args, **kwargs)
+
+class PaymentModeCreate(WithNameAjaxableResponseMixin,CreateView):
+    
+    model = PaymentMode
+    form_class = PaymentModeForm
+    template_name = 'simplecost/paymentmode_create_form.html'
+    
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(PaymentModeCreate, self).dispatch(*args, **kwargs)
 
 class ExpenseListView(ListView):
     """

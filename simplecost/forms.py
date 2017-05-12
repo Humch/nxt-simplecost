@@ -19,6 +19,20 @@ class ThirdPartyForm(ModelForm):
         
         model = ThirdParty
         fields = ['name']
+
+class PaymentModeForm(ModelForm):
+    """
+    Model form to create Payment Mode Model object
+    """
+    
+    name = CharField(
+                label = _("Name")
+    )
+    
+    class Meta:
+        
+        model = PaymentMode
+        fields = ['name']
     
 
 class ExpenseForm(ModelForm):
@@ -49,7 +63,7 @@ class ExpenseForm(ModelForm):
     
     payment_mode = ModelChoiceField(
                         queryset = PaymentMode.objects.all(),
-                        label = _("Payment Mode"),
+                    label = mark_safe(_("Payment Mode") + ' <a href="#" onClick="addPaymentMode()"><i class="fi-plus green-color"></i></a>'),
                         required = True
                     )
     

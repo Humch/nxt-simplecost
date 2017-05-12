@@ -80,6 +80,8 @@
 	</div>
 	<div class="reveal" id="openThirdPartyForm" data-reveal data-multiple-opened="true">
 	</div>
+	<div class="reveal" id="openPaymentModeForm" data-reveal data-multiple-opened="true">
+	</div>
 	<div class="reveal" id="deleteExpense" data-reveal>
 	</div>
 
@@ -92,6 +94,15 @@
 			$.ajax('{% url 'thirdparty-create' %}')
 			.done(function(resp){
 				$("#openThirdPartyForm").html(resp).foundation('open');
+			});
+		}
+	</script>
+	
+	<script type="text/javascript">
+		function addPaymentMode() {
+			$.ajax('{% url 'paymentmode-create' %}')
+			.done(function(resp){
+				$("#openPaymentModeForm").html(resp).foundation('open');
 			});
 		}
 	</script>
