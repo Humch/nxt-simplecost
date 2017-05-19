@@ -14,7 +14,7 @@ from calendar import monthrange
 
 from .models import ThirdParty, PaymentMode, Expense
 
-from .forms import ExpenseForm
+from .forms import ExpenseForm, ThirdPartyForm, PaymentModeForm
 
 from django.http import HttpResponse
 
@@ -59,6 +59,52 @@ class AjaxableResponseMixin(object):
             return JsonResponse(data)
         else:
             return response
+
+class WithNameAjaxableResponseMixin(object):
+    """
+    Mixin to add AJAX support to a form.
+    Must be used with an object-based FormView (e.g. CreateView)
+    """
+    def form_invalid(self, form):
+        response = super(WithNameAjaxableResponseMixin, self).form_invalid(form)
+        if self.request.is_ajax():
+            return JsonResponse(form.errors, status=400)
+        else:
+            return response
+
+    def form_valid(self, form):
+        # We make sure to call the parent's form_valid() method because
+        # it might do some processing (in the case of CreateView, it will
+        # call form.save() for example).
+        response = super(WithNameAjaxableResponseMixin, self).form_valid(form)
+        if self.request.is_ajax():
+            data = {
+                'pk': self.object.pk,
+                'name': self.object.name,
+            }
+            return JsonResponse(data)
+        else:
+            return response
+
+class ThirdPartyCreate(WithNameAjaxableResponseMixin,CreateView):
+    
+    model = ThirdParty
+    form_class = ThirdPartyForm
+    template_name = 'simplecost/thirdparty_create_form.html'
+    
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ThirdPartyCreate, self).dispatch(*args, **kwargs)
+
+class PaymentModeCreate(WithNameAjaxableResponseMixin,CreateView):
+    
+    model = PaymentMode
+    form_class = PaymentModeForm
+    template_name = 'simplecost/paymentmode_create_form.html'
+    
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(PaymentModeCreate, self).dispatch(*args, **kwargs)
 
 class ExpenseListView(ListView):
     """

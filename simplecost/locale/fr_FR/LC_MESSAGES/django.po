@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-12 14:31+0200\n"
+"POT-Creation-Date: 2017-05-12 16:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,27 +17,33 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: forms.py:13
+#: forms.py:15 forms.py:29
+msgid "Name"
+msgstr "Nom"
+
+#: forms.py:43
 msgid "Expense Date"
 msgstr "Date de dépense"
 
-#: forms.py:19 templates/simplecost/expense_list.html:47
+#: forms.py:49 templates/simplecost/expense_list.html:47
 #: templates/simplecost/expense_list_table.html:10
+#: templates/simplecost/thirdparty_create_form.html:4
 msgid "Third Party"
 msgstr "Tiers"
 
-#: forms.py:24 templates/simplecost/expense_list.html:48
+#: forms.py:54 templates/simplecost/expense_list.html:48
 #: templates/simplecost/expense_list_table.html:11
 msgid "Amount"
 msgstr "Montant"
 
-#: forms.py:29 templates/simplecost/expense_list.html:50
+#: forms.py:59 templates/simplecost/expense_list.html:50
 #: templates/simplecost/expense_list_table.html:13
 msgid "Notes"
 msgstr "Notes"
 
-#: forms.py:36 templates/simplecost/expense_list.html:49
+#: forms.py:66 templates/simplecost/expense_list.html:49
 #: templates/simplecost/expense_list_table.html:12
+#: templates/simplecost/paymentmode_create_form.html:4
 msgid "Payment Mode"
 msgstr "Mode de paiement"
 
@@ -59,6 +65,8 @@ msgstr "la dépense n'est pas créée"
 
 #: templates/simplecost/expense_create_form.html:13
 #: templates/simplecost/expense_form.html:13
+#: templates/simplecost/paymentmode_create_form.html:13
+#: templates/simplecost/thirdparty_create_form.html:13
 msgid "Submit"
 msgstr "Valider"
 
@@ -107,3 +115,22 @@ msgstr "Date"
 #: templates/simplecost/expense_list_table.html:36
 msgid "You don't have any expenses ! Go out ! ;)"
 msgstr "Vous n'avez rien dépensé ! Au boulot ! ;)"
+
+#: templates/simplecost/paymentmode_create_form.html:4
+#: templates/simplecost/thirdparty_create_form.html:4
+#, fuzzy
+#| msgid "Expense is created"
+msgid "is created"
+msgstr "est créé"
+
+#: templates/simplecost/paymentmode_create_form.html:7
+#, fuzzy
+#| msgid "Expense isn't created"
+msgid "Payment Mode isn't created"
+msgstr "la dépense n'est pas créée"
+
+#: templates/simplecost/thirdparty_create_form.html:7
+#, fuzzy
+#| msgid "Third Party"
+msgid "Third Party isn't created"
+msgstr "Le tiers n'est pas créé"

@@ -2,8 +2,38 @@ from django import forms
 from django.forms import ModelForm, ModelChoiceField, DateField, DecimalField,CharField, Select
 
 from django.utils.translation import ugettext as _
-
+from django.utils.safestring import mark_safe
 from .models import ThirdParty, PaymentMode, Expense
+
+
+class ThirdPartyForm(ModelForm):
+    """
+    Model form to create Third Party Model object
+    """
+    
+    name = CharField(
+                label = _("Name")
+    )
+    
+    class Meta:
+        
+        model = ThirdParty
+        fields = ['name']
+
+class PaymentModeForm(ModelForm):
+    """
+    Model form to create Payment Mode Model object
+    """
+    
+    name = CharField(
+                label = _("Name")
+    )
+    
+    class Meta:
+        
+        model = PaymentMode
+        fields = ['name']
+    
 
 class ExpenseForm(ModelForm):
     """
@@ -16,7 +46,7 @@ class ExpenseForm(ModelForm):
     
     third_party = ModelChoiceField(
                     queryset = ThirdParty.objects.all(),
-                    label = _("Third Party"),
+                    label = mark_safe(_("Third Party") + ' <a href="#" onClick="addThirdParty()"><i class="fi-plus green-color"></i></a>'),
                     required = True
                 )
     
@@ -33,7 +63,7 @@ class ExpenseForm(ModelForm):
     
     payment_mode = ModelChoiceField(
                         queryset = PaymentMode.objects.all(),
-                        label = _("Payment Mode"),
+                    label = mark_safe(_("Payment Mode") + ' <a href="#" onClick="addPaymentMode()"><i class="fi-plus green-color"></i></a>'),
                         required = True
                     )
     
