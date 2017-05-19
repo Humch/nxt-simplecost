@@ -7,7 +7,8 @@ Version 0.0.2
 - add french translation
 - update forms for Django 1.11
 - update export pdf
-- add update and delete functions to expense in expense's list 
+- add update and delete functions to expense in expense's list
+- add ajax function to filter the list of expenses with all, a monthly range or the actual quarter range 
 
 Version 0.0.1
 --------------
