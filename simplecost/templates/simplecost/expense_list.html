@@ -32,8 +32,8 @@
 			</ul>
 		</div>
 		<div class='small-2 medium-4 columns'>
-			<p class="text-center show-for-medium"><a class='button' href="{% url 'print-expense-list' %}" target="_blank"><i class="fi-page-pdf"></i> {% trans "Export to pdf" %}</a></p>
-			<p class="text-center hide-for-medium"><a class='button' href="{% url 'print-expense-list' %}" target="_blank"><i class="fi-page-pdf"></i></a></p>
+			<p class="text-center show-for-medium"><a class='button exportPdf' href="{% url 'print-expense-list' %}" target="_blank"><i class="fi-page-pdf"></i> {% trans "Export to pdf" %}</a></p>
+			<p class="text-center hide-for-medium"><a class='button exportPdf' href="{% url 'print-expense-list' %}" target="_blank"><i class="fi-page-pdf"></i></a></p>
 		</div>
 	</div>
 <span id="expense_list_table">
@@ -177,6 +177,7 @@
 						};
 					};
 					$("#sessionFilterExpense").text(filterExpenseMonth + "/" + filterExpenseYear);
+					$("a.exportPdf").prop("href", "{% url 'print-expense-list' %}?filter=" + filter);
 					}
 				});
 		}
@@ -196,6 +197,7 @@
 					$("#sessionFilterExpense").text(filterExpenseValue);
 					filterExpenseMonth = parseInt('{% now "m" %}');
 					filterExpenseYear = parseInt('{% now "Y" %}');
+					$("a.exportPdf").prop("href", "{% url 'print-expense-list' %}?filter=" + filter);
 					}
 				});
 		}

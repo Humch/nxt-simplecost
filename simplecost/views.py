@@ -260,8 +260,8 @@ class ExpenseDelete(AjaxableResponseMixin, DeleteView):
     
 def print_it(request):
     """
-    Create a pdf file with the list of all expenses
-    ordered by oldest expenses
+    Create a pdf file with the list of expenses
+    ordered by oldest expenses and filter by the view data
     """
     # Create the HttpResponse object with the appropriate PDF headers.
     response = HttpResponse(content_type='application/pdf')
@@ -269,8 +269,26 @@ def print_it(request):
 
     # Create the PDF object, using the response object as its "file."
     p = SimpleDocTemplate(response, pagesize=letter)
+    
+    if request.GET.get("filter") == "This month":
         
-    expenses = Expense.objects.filter(property_of=request.user).order_by('date_expense')
+        expenses = Expense.objects.filter(property_of=request.user,date_expense__year=date.today().year,date_expense__month=date.today().month).order_by('-date_expense')
+    
+    elif request.GET.get("filter") == "This quarter":
+            
+        expenses = Expense.objects.filter(property_of=request.user,date_expense__range=quarter_range()).order_by('-date_expense')
+    
+    elif request.GET.get("filter") == "Previous month" or request.GET.get("filter") == "Next month":
+        
+        request_year = request.session['filterexpenseyear']
+        request_month = request.session['filterexpensemonth']
+            
+        expenses = Expense.objects.filter(property_of=request.user,date_expense__year=request_year,date_expense__month=request_month).order_by('-date_expense')
+        
+    
+    else:
+    
+        expenses = Expense.objects.filter(property_of=request.user).order_by('date_expense')
     
     # container for the 'Flowable' objects
     elements = []
